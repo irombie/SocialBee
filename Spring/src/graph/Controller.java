@@ -53,7 +53,25 @@ public class Controller {
     	}
     	ArrayList<GraphNode> nodes = new ArrayList<>();
     	
-    	String query = ("MATCH (n:Movie) return n;");
-    	return null;
+    	String query = ("match(m:Movie) return m ");
+    	GraphData data = Operation.pullMovies(query, nodes);
+    	return data;
+    }
+    @RequestMapping("/ShortestPath")
+    public GraphData ShortestPath(){
+    	
+    	if(!isInitialized)
+    	{
+    		Operation.initialize();
+    		isInitialized = true;
+    	}
+    	ArrayList<GraphNode> nodes = new ArrayList<>();
+    	ArrayList<GraphEdge> edges = new ArrayList<>();
+    	
+    	String query = ("Match  (m1:Movie {title:\"V for Vendetta\"}),(m2:Movie {title:\"The Replacements\"}),p = shortestPath((m1)-[*]-(m2))"+
+    					"With p, extract(rel in rels(p) | type(rel)) as types, nodes(p) as nds"+
+    					"return nds, types,extract (x in nds | labels(x));");
+    	GraphData data = Operation.shortestPath(query, nodes,edges);
+    	return data;
     }
 }

@@ -38,6 +38,51 @@ public class Operation {
 		File db = new File(DBPATH);
 		service = graphDbFactory.newEmbeddedDatabase(db);
 	}
+	public static GraphData shortestPath(String query,ArrayList<GraphNode> nodes,ArrayList<GraphEdge> edges){
+		Result result = service.execute(query);
+		while(result.hasNext()){
+			Map<String,Object> map = result.next();
+			Set<String> keys = map.keySet();
+			for (String key : keys){
+				
+			}
+		}
+		return null;
+	}
+	public static GraphData pullMovies (String query,ArrayList<GraphNode> nodes){
+		Result result = service.execute(query);
+		while(result.hasNext()){
+			Map<String,Object> map = result.next();
+			Set<String> keys = map.keySet();
+			
+			for (String key : keys){
+				Node node = (Node) map.get(key);			
+				int id = Integer.parseInt(String.valueOf(node.getId()));
+
+				Map<String, Object> valueMap = node.getAllProperties();
+				Set<String> valueMapKeys = valueMap.keySet();
+				
+				Movie movie = new Movie();
+				MovieData dt = new MovieData();
+				dt.setId(id);
+				dt.setType("movie");
+				for (String valueMapKey : valueMapKeys) {
+					if(valueMapKey.equals("tagline"))
+						dt.setTagLine((String) valueMap.get(valueMapKey));
+					if(valueMapKey.equals("title"))
+						dt.setTitle((String) valueMap.get(valueMapKey));
+					else
+						dt.setReleased(String.valueOf(valueMap.get(valueMapKey)));
+				}
+				movie.setData(dt);
+				nodes.add(movie);
+			}
+			
+		}
+		GraphData data = new GraphData();
+		data.setNodes(nodes);
+		return data;
+	}
 	public static GraphData movieNetwork(String query,ArrayList<GraphNode> nodes,ArrayList<GraphEdge> edges,String firstRelation,String secondRelation ,String nameOfMovie) throws IOException{
 		Result result = service.execute(query);
 		HashSet<Integer> ids = new HashSet<Integer>();//Node ids set for dupplication check
@@ -47,9 +92,8 @@ public class Operation {
 			Set<String> keys = map.keySet();
 			
 			for (String key : keys) {
-				Node node = (Node) map.get(key);			
-				String idS = String.valueOf(node.getId());
-				int id = Integer.parseInt(idS);
+				Node node = (Node) map.get(key);		
+				int id = Integer.parseInt(String.valueOf(node.getId()));
 				
 				if(!ids.contains(id))
 					ids.add(id);
