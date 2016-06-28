@@ -1,36 +1,77 @@
 package graph;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicLong;
+
+import org.neo4j.graphdb.GraphDatabaseService;
+import org.neo4j.graphdb.factory.GraphDatabaseFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import neo4j.*;;
+
 @RestController
 public class Controller {
 
-    private static final String template = "Hello, %s!";
-    private final AtomicLong counter = new AtomicLong();
+    private boolean isInitialized = false;
 
-    @RequestMapping("/getGraphData")
-    public GraphData getGraphData() {
-    	Node[] nodes = new Node[2];
-    	Node n1 = new Node();
-    	Node n2 = new Node();
-    	NodeData nd1 = new NodeData();
-    	NodeData nd2 = new NodeData();
-    	nd1.setId("1");
-    	nd2.setId("2");
-    	nd1.setName("Batu");
-    	nd2.setName("Hasan");
-    	n1.setData(nd1);
-    	n2.setData(nd2);
-    	nodes[0]=n1;
-    	nodes[1]=n2;
-        GraphData gd = new GraphData();
-        gd.setNodes(nodes);
-        return gd;
+    @RequestMapping("/GraphData")
+    public GraphData GraphData(@RequestParam(value="movieName", defaultValue="V for Vendetta") String movieName) {
+
+    	if(!isInitialized)
+    	{
+    		Operation.initialize();
+    		isInitialized = true;
+    	}
+    	
+    	ArrayList<GraphNode> nodes = new ArrayList<>();
+    	ArrayList<GraphEdge> edges = new ArrayList<>();
+    	String firstRelation = "ACTED_IN";
+    	String secondRelation = "DIRECTED";
+        String query = "MATCH (a)-[:"+firstRelation+"]->(m{title:\""+movieName+"\"})<-[:"+secondRelation+"]-(d) RETURN a,m,d;";
+        GraphData data = null;
         
-        
-        
+		try {
+			data = Operation.movieNetwork(query,nodes,edges,firstRelation,secondRelation,movieName);
+		} catch (IOException e) {
+			System.out.println("PROBLEM!!!");
+			e.printStackTrace();
+		}
+		return data;  
+    }
+    
+    @RequestMapping("/Movies")
+    public GraphData Movies()
+    {
+    	if(!isInitialized)
+    	{
+    		Operation.initialize();
+    		isInitialized = true;
+    	}
+    	ArrayList<GraphNode> nodes = new ArrayList<>();
+    	
+    	String query = ("match(m:Movie) return m ");
+    	GraphData data = Operation.pullMovies(query, nodes);
+    	return data;
+    }
+    @RequestMapping("/ShortestPath")
+    public GraphData ShortestPath(){
+    	
+    	if(!isInitialized)
+    	{
+    		Operation.initialize();
+    		isInitialized = true;
+    	}
+    	ArrayList<GraphNode> nodes = new ArrayList<>();
+    	ArrayList<GraphEdge> edges = new ArrayList<>();
+    	
+    	String query = ("Match  (m1:Movie {title:\"V for Vendetta\"}),(m2:Movie {title:\"The Replacements\"}),p = shortestPath((m1)-[*]-(m2))"+
+    					"With p, extract(rel in rels(p) | type(rel)) as types, nodes(p) as nds"+
+    					"return nds, types,extract (x in nds | labels(x));");
+    	GraphData data = Operation.shortestPath(query, nodes,edges);
+    	return data;
     }
 }
