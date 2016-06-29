@@ -1,0 +1,303 @@
+{
+  "groups": [
+    {
+      "name": "jhipster",
+      "sourceType": "com.staj.proje.config.JHipsterProperties",
+      "type": "com.staj.proje.config.JHipsterProperties"
+    },
+    {
+      "name": "jhipster.async",
+      "sourceMethod": "getAsync()",
+      "sourceType": "com.staj.proje.config.JHipsterProperties",
+      "type": "com.staj.proje.config.JHipsterProperties$Async"
+    },
+    {
+      "name": "jhipster.cache",
+      "sourceMethod": "getCache()",
+      "sourceType": "com.staj.proje.config.JHipsterProperties",
+      "type": "com.staj.proje.config.JHipsterProperties$Cache"
+    },
+    {
+      "name": "jhipster.http",
+      "sourceMethod": "getHttp()",
+      "sourceType": "com.staj.proje.config.JHipsterProperties",
+      "type": "com.staj.proje.config.JHipsterProperties$Http"
+    },
+    {
+      "name": "jhipster.http.cache",
+      "sourceMethod": "getCache()",
+      "sourceType": "com.staj.proje.config.JHipsterProperties$Http",
+      "type": "com.staj.proje.config.JHipsterProperties$Http$Cache"
+    },
+    {
+      "name": "jhipster.logging",
+      "sourceMethod": "getLogging()",
+      "sourceType": "com.staj.proje.config.JHipsterProperties",
+      "type": "com.staj.proje.config.JHipsterProperties$Logging"
+    },
+    {
+      "name": "jhipster.logging.logstash",
+      "sourceMethod": "getLogstash()",
+      "sourceType": "com.staj.proje.config.JHipsterProperties$Logging",
+      "type": "com.staj.proje.config.JHipsterProperties$Logging$Logstash"
+    },
+    {
+      "name": "jhipster.mail",
+      "sourceMethod": "getMail()",
+      "sourceType": "com.staj.proje.config.JHipsterProperties",
+      "type": "com.staj.proje.config.JHipsterProperties$Mail"
+    },
+    {
+      "name": "jhipster.metrics",
+      "sourceMethod": "getMetrics()",
+      "sourceType": "com.staj.proje.config.JHipsterProperties",
+      "type": "com.staj.proje.config.JHipsterProperties$Metrics"
+    },
+    {
+      "name": "jhipster.metrics.graphite",
+      "sourceMethod": "getGraphite()",
+      "sourceType": "com.staj.proje.config.JHipsterProperties$Metrics",
+      "type": "com.staj.proje.config.JHipsterProperties$Metrics$Graphite"
+    },
+    {
+      "name": "jhipster.metrics.jmx",
+      "sourceMethod": "getJmx()",
+      "sourceType": "com.staj.proje.config.JHipsterProperties$Metrics",
+      "type": "com.staj.proje.config.JHipsterProperties$Metrics$Jmx"
+    },
+    {
+      "name": "jhipster.metrics.logs",
+      "sourceMethod": "getLogs()",
+      "sourceType": "com.staj.proje.config.JHipsterProperties$Metrics",
+      "type": "com.staj.proje.config.JHipsterProperties$Metrics$Logs"
+    },
+    {
+      "name": "jhipster.metrics.spark",
+      "sourceMethod": "getSpark()",
+      "sourceType": "com.staj.proje.config.JHipsterProperties$Metrics",
+      "type": "com.staj.proje.config.JHipsterProperties$Metrics$Spark"
+    },
+    {
+      "name": "jhipster.ribbon",
+      "sourceMethod": "getRibbon()",
+      "sourceType": "com.staj.proje.config.JHipsterProperties",
+      "type": "com.staj.proje.config.JHipsterProperties$Ribbon"
+    },
+    {
+      "name": "jhipster.security",
+      "sourceMethod": "getSecurity()",
+      "sourceType": "com.staj.proje.config.JHipsterProperties",
+      "type": "com.staj.proje.config.JHipsterProperties$Security"
+    },
+    {
+      "name": "jhipster.security.remember-me",
+      "sourceMethod": "getRememberMe()",
+      "sourceType": "com.staj.proje.config.JHipsterProperties$Security",
+      "type": "com.staj.proje.config.JHipsterProperties$Security$RememberMe"
+    },
+    {
+      "name": "jhipster.social",
+      "sourceMethod": "getSocial()",
+      "sourceType": "com.staj.proje.config.JHipsterProperties",
+      "type": "com.staj.proje.config.JHipsterProperties$Social"
+    },
+    {
+      "name": "jhipster.swagger",
+      "sourceMethod": "getSwagger()",
+      "sourceType": "com.staj.proje.config.JHipsterProperties",
+      "type": "com.staj.proje.config.JHipsterProperties$Swagger"
+    },
+    {
+      "name": "spring.datasource.hikari",
+      "sourceMethod": "dataSource(org.springframework.boot.autoconfigure.jdbc.DataSourceProperties)",
+      "sourceType": "com.staj.proje.config.DatabaseConfiguration",
+      "type": "javax.sql.DataSource"
+    }
+  ],
+  "hints": [],
+  "properties": [
+    {
+      "defaultValue": 2,
+      "name": "jhipster.async.core-pool-size",
+      "sourceType": "com.staj.proje.config.JHipsterProperties$Async",
+      "type": "java.lang.Integer"
+    },
+    {
+      "defaultValue": 50,
+      "name": "jhipster.async.max-pool-size",
+      "sourceType": "com.staj.proje.config.JHipsterProperties$Async",
+      "type": "java.lang.Integer"
+    },
+    {
+      "defaultValue": 10000,
+      "name": "jhipster.async.queue-capacity",
+      "sourceType": "com.staj.proje.config.JHipsterProperties$Async",
+      "type": "java.lang.Integer"
+    },
+    {
+      "defaultValue": 3600,
+      "name": "jhipster.cache.time-to-live-seconds",
+      "sourceType": "com.staj.proje.config.JHipsterProperties$Cache",
+      "type": "java.lang.Integer"
+    },
+    {
+      "defaultValue": 1461,
+      "name": "jhipster.http.cache.time-to-live-in-days",
+      "sourceType": "com.staj.proje.config.JHipsterProperties$Http$Cache",
+      "type": "java.lang.Integer"
+    },
+    {
+      "defaultValue": false,
+      "name": "jhipster.logging.logstash.enabled",
+      "sourceType": "com.staj.proje.config.JHipsterProperties$Logging$Logstash",
+      "type": "java.lang.Boolean"
+    },
+    {
+      "defaultValue": "localhost",
+      "name": "jhipster.logging.logstash.host",
+      "sourceType": "com.staj.proje.config.JHipsterProperties$Logging$Logstash",
+      "type": "java.lang.String"
+    },
+    {
+      "defaultValue": 5000,
+      "name": "jhipster.logging.logstash.port",
+      "sourceType": "com.staj.proje.config.JHipsterProperties$Logging$Logstash",
+      "type": "java.lang.Integer"
+    },
+    {
+      "defaultValue": 512,
+      "name": "jhipster.logging.logstash.queue-size",
+      "sourceType": "com.staj.proje.config.JHipsterProperties$Logging$Logstash",
+      "type": "java.lang.Integer"
+    },
+    {
+      "defaultValue": "staj_proje@localhost",
+      "name": "jhipster.mail.from",
+      "sourceType": "com.staj.proje.config.JHipsterProperties$Mail",
+      "type": "java.lang.String"
+    },
+    {
+      "defaultValue": false,
+      "name": "jhipster.metrics.graphite.enabled",
+      "sourceType": "com.staj.proje.config.JHipsterProperties$Metrics$Graphite",
+      "type": "java.lang.Boolean"
+    },
+    {
+      "defaultValue": "localhost",
+      "name": "jhipster.metrics.graphite.host",
+      "sourceType": "com.staj.proje.config.JHipsterProperties$Metrics$Graphite",
+      "type": "java.lang.String"
+    },
+    {
+      "defaultValue": 2003,
+      "name": "jhipster.metrics.graphite.port",
+      "sourceType": "com.staj.proje.config.JHipsterProperties$Metrics$Graphite",
+      "type": "java.lang.Integer"
+    },
+    {
+      "defaultValue": "staj_proje",
+      "name": "jhipster.metrics.graphite.prefix",
+      "sourceType": "com.staj.proje.config.JHipsterProperties$Metrics$Graphite",
+      "type": "java.lang.String"
+    },
+    {
+      "defaultValue": true,
+      "name": "jhipster.metrics.jmx.enabled",
+      "sourceType": "com.staj.proje.config.JHipsterProperties$Metrics$Jmx",
+      "type": "java.lang.Boolean"
+    },
+    {
+      "defaultValue": false,
+      "name": "jhipster.metrics.logs.enabled",
+      "sourceType": "com.staj.proje.config.JHipsterProperties$Metrics$Logs",
+      "type": "java.lang.Boolean"
+    },
+    {
+      "defaultValue": false,
+      "name": "jhipster.metrics.spark.enabled",
+      "sourceType": "com.staj.proje.config.JHipsterProperties$Metrics$Spark",
+      "type": "java.lang.Boolean"
+    },
+    {
+      "defaultValue": "localhost",
+      "name": "jhipster.metrics.spark.host",
+      "sourceType": "com.staj.proje.config.JHipsterProperties$Metrics$Spark",
+      "type": "java.lang.String"
+    },
+    {
+      "defaultValue": 9999,
+      "name": "jhipster.metrics.spark.port",
+      "sourceType": "com.staj.proje.config.JHipsterProperties$Metrics$Spark",
+      "type": "java.lang.Integer"
+    },
+    {
+      "name": "jhipster.ribbon.display-on-active-profiles",
+      "sourceType": "com.staj.proje.config.JHipsterProperties$Ribbon",
+      "type": "java.lang.String[]"
+    },
+    {
+      "name": "jhipster.security.remember-me.key",
+      "sourceType": "com.staj.proje.config.JHipsterProperties$Security$RememberMe",
+      "type": "java.lang.String"
+    },
+    {
+      "defaultValue": "/#/home",
+      "name": "jhipster.social.redirect-after-sign-in",
+      "sourceType": "com.staj.proje.config.JHipsterProperties$Social",
+      "type": "java.lang.String"
+    },
+    {
+      "name": "jhipster.swagger.contact-email",
+      "sourceType": "com.staj.proje.config.JHipsterProperties$Swagger",
+      "type": "java.lang.String"
+    },
+    {
+      "name": "jhipster.swagger.contact-name",
+      "sourceType": "com.staj.proje.config.JHipsterProperties$Swagger",
+      "type": "java.lang.String"
+    },
+    {
+      "name": "jhipster.swagger.contact-url",
+      "sourceType": "com.staj.proje.config.JHipsterProperties$Swagger",
+      "type": "java.lang.String"
+    },
+    {
+      "defaultValue": "staj_proje API documentation",
+      "name": "jhipster.swagger.description",
+      "sourceType": "com.staj.proje.config.JHipsterProperties$Swagger",
+      "type": "java.lang.String"
+    },
+    {
+      "name": "jhipster.swagger.enabled",
+      "sourceType": "com.staj.proje.config.JHipsterProperties$Swagger",
+      "type": "java.lang.Boolean"
+    },
+    {
+      "name": "jhipster.swagger.license",
+      "sourceType": "com.staj.proje.config.JHipsterProperties$Swagger",
+      "type": "java.lang.String"
+    },
+    {
+      "name": "jhipster.swagger.license-url",
+      "sourceType": "com.staj.proje.config.JHipsterProperties$Swagger",
+      "type": "java.lang.String"
+    },
+    {
+      "name": "jhipster.swagger.terms-of-service-url",
+      "sourceType": "com.staj.proje.config.JHipsterProperties$Swagger",
+      "type": "java.lang.String"
+    },
+    {
+      "defaultValue": "staj_proje API",
+      "name": "jhipster.swagger.title",
+      "sourceType": "com.staj.proje.config.JHipsterProperties$Swagger",
+      "type": "java.lang.String"
+    },
+    {
+      "defaultValue": "0.0.1",
+      "name": "jhipster.swagger.version",
+      "sourceType": "com.staj.proje.config.JHipsterProperties$Swagger",
+      "type": "java.lang.String"
+    }
+  ]
+}

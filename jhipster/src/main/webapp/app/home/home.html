@@ -1,0 +1,424 @@
+<div ng-cloak>
+    <h1>Welcome!</h1>
+    <input type="button" id="GraphData" value="Movie Analysis" onclick="show_graph_data()" />
+    <input type="button" id="Analytics" value="Show Analysis Results" onclick="show_analysis_results()" />
+    <input type="button" id="Charts" value="Show Charts" onclick="show_charts()" />
+
+    <p id="selections"> </br> </br>
+        <select id="shortest_path_selection" style="display: none; position: relative"> </select>
+        <input type="button" name="show_lists" id="show_lists" value="Show Lists" style="display: none" onclick="show_lists()" />
+        <div class="divider" style="width:5px; height:auto; display:inline-block;"> </div>
+        </br> </br>
+            <select id="movie_list" style="display: none; position: relative"> </select>
+            <select id="people_list" style="display: none; position: relative"> </select>
+            
+            <select id="movie_list_2" style="display: none; position: relative"> </select>
+            <select id="people_list_2" style="display: none; position: relative"> </select>
+            
+            <select id="relations" style="display: none; position: relative"> </select>
+            <select id="type" style="display: none; position: relative"> </select>
+
+            <input type="button" name="send_movie" id="send_movie" value="Show Graph" style="display: none" onclick="send_movie()" />
+            <input type="button" name="show_shortest_path" id="send_shortest_path" value="Show Shortest Path" style="display: none" onclick="show_shortest_path()" />
+            <input type="button" name="show_degree_centrality" id="send_degree_centrality" value="Show Degree Centrality" style="display: none" onclick="show_degree_centrality()" />     
+    </p>
+    
+    <p> Movie Network </p>
+    <div id="cy" class="well" style="height: 500px; width: 100%; top: 100px; position: relative"> </div>
+
+    <p> Chart </p>
+    <div id="chart" class="well" style="height: auto; width: 100%; position: relative"> </div>
+
+</div>
+
+<script>
+    var _elements = {nodes : [], edges : []}, created = false, choice, types_created = false, chart_created = false;
+    var svg = dimple.newSvg('#chart', 1500, 960), myChart;
+
+    var cy = cytoscape({
+
+        container : document.getElementById('cy'),
+
+        style: cytoscape.stylesheet()
+                .selector("node[type='Director']")
+                    .css({ 'content': 'data(name)', 'background-color': 'red', 'text-valign': 'center', 'color': 'white', 'text-outline-width': 2, 'text-outline-color': '#666', 'shape': 'octagon', 'text-valign': 'bottom' })
+                .selector("node[type='Person']")
+                    .css({ 'content': 'data(name)', 'background-color': 'blue', 'text-valign': 'center', 'color': 'white', 'text-outline-width': 2, 'text-outline-color': '#666', 'shape': 'ellipse', 'text-valign': 'bottom' })
+                .selector("node[type='Actor']")
+                    .css({ 'content': 'data(name)', 'background-color': 'blue', 'text-valign': 'center', 'color': 'white', 'text-outline-width': 2, 'text-outline-color': '#666', 'shape': 'ellipse', 'text-valign': 'bottom' })
+                .selector("node[type='Movie']")
+                    .css({ 'content': 'data(title)', 'background-color': 'green', 'text-valign': 'center', 'color': 'white', 'text-outline-width': 2, 'text-outline-color': '#666', 'shape': 'rectangle', 'text-valign': 'bottom' })
+                .selector('edge')
+                    .css({ 'content': 'data(type)', 'target-arrow-shape': 'triangle', 'target-arrow-fill': 'filled', 'width': 2 })
+                .selector(':selected')
+                    .css({ 'background-color': 'black', 'line-color': 'black', 'target-arrow-color': 'black', 'source-arrow-color': 'black' })
+                .selector('.faded')
+                    .css({ 'opacity': 0.25, 'text-opacity': 0 }),
+
+            //elements : _elements,
+            
+            headless: false,
+            wheelSensitivity: 0.2
+    });
+
+    function show_graph_data() {
+        $('#movie_list').css('display', 'inline-block');
+        $('#send_movie').css('display', 'inline-block');
+
+        $('#people_list').css('display', 'none');
+        $('#people_list_2').css('display', 'none');
+        $('#movie_list_2').css('display', 'none');
+        $('#relations').css('display', 'none');
+        $('#shortest_path_selection').css('display', 'none');
+        $('#send_movie').css('display', 'inline-block');
+        $('#send_shortest_path').css('display', 'none');
+        $('#show_lists').css('display', 'none');
+        $('#send_degree_centrality').css('display', 'none');
+        $('#type').css('display', 'none');
+
+        get_movies();
+    }
+
+    function send_movie() {
+        var list = document.getElementById('movie_list');
+        if(!list.selectedIndex || list.options[list.selectedIndex].value == "Movie List") { alert("Please Select a Movie"); return; }
+        
+        var selected_value = list.options[list.selectedIndex].value;
+        cy.elements().remove();
+
+        $.ajax({
+            type : 'POST',
+            contentType: 'application/json;charset=UTF-8',
+            url : 'api/sendMovie',
+            data: selected_value,
+            dataType: "JSON",
+            success : function(data) {
+                console.log("Send Movie Result : ");
+                console.log(data.nodes);
+                
+                cy.add(data);
+                cy.layout({name: 'concentric', padding: 90, width: 100});
+                arrange_cy();
+            }
+        });
+    }
+
+    function show_analysis_results() {
+        $('#shortest_path_selection').css('display', 'inline-block');
+
+        $('#movie_list').css('display', 'none');
+        $('#send_movie').css('display', 'none');
+        $('#relations').css('display', 'none');
+        $('#type').css('display', 'none');
+        $('#send_shortest_path').css('display', 'inline-block');
+        $('#send_degree_centrality').css('display', 'none');
+        $('#send_shortest_path').css('display', 'none');
+
+        var list = document.getElementById('shortest_path_selection');
+        if(!created) {
+            created = true;
+            var option = document.createElement("option");
+            option.text = "Select The Type of Shortest Path"; list.add(option);
+
+            option = document.createElement("option");
+            option.text = "Movie to Movie"; list.add(option);
+
+            option = document.createElement("option");
+            option.text = "Movie to People"; list.add(option);
+
+            option = document.createElement("option");
+            option.text = "People to People"; list.add(option);
+
+        }
+        
+        $('#show_lists').css('display', 'inline-block');
+    }
+
+    function show_lists() {
+        var list = document.getElementById('shortest_path_selection');
+        if(!list.selectedIndex || list.options[list.selectedIndex].value == "Select The Type of Shortest Path") { 
+            alert("Please Select a Type"); return; 
+        }
+        
+        var selected_value = list.options[list.selectedIndex].value;
+        $('#send_shortest_path').css('display', 'inline-block');
+
+        if(selected_value == "Movie to People") {
+            choice = 1;
+            get_movies();
+            get_people();
+
+            $('#movie_list').css('display', 'inline-block');
+            $('#people_list').css('display', 'inline-block');
+
+            $('#people_list_2').css('display', 'none');
+            $('#movie_list_2').css('display', 'none');
+        }
+
+        else if(selected_value == "People to People") {
+            choice = 2;
+            get_people();
+            
+            $('#people_list').css('display', 'inline-block');
+            $('#people_list_2').css('display', 'inline-block');
+
+            $('#movie_list').css('display', 'none');
+            $('#movie_list_2').css('display', 'none');
+        }
+
+        else if(selected_value == "Movie to Movie") {
+            choice = 3;
+            get_movies('movie_list');
+
+            $('#movie_list').css('display', 'inline-block');
+            $('#movie_list_2').css('display', 'inline-block');
+
+            $('#people_list').css('display', 'none');
+            $('#people_list_2').css('display', 'none');
+        }
+    }
+
+    function show_shortest_path() {
+        var list = document.getElementById('movie_list');
+        var list2 = document.getElementById('people_list');
+        var list3 = document.getElementById('movie_list_2');
+        var list4 = document.getElementById('people_list_2');
+        var url = "", selected_value, selected_value_2;
+
+        if(choice == 1) {           // Movie to People
+            url = "api/shortestPathM2P";
+            if(!list.selectedIndex || list.options[list.selectedIndex].value == "Movie List"
+                || !list2.selectedIndex || list2.options[list2.selectedIndex].value == "People List") { 
+                    alert("Please Select a Type");
+                    return;
+            }
+            selected_value = list.options[list.selectedIndex].value;
+            selected_value_2 = list2.options[list2.selectedIndex].value;
+        }
+        
+        else if(choice == 2) {      // People to People
+            url = "api/shortestPathP2P";
+            if(!list2.selectedIndex || list2.options[list2.selectedIndex].value == "People List"
+                || !list4.selectedIndex || list4.options[list4.selectedIndex].value == "People List") { 
+                    alert("Please Select a Type");
+                    return;
+            }
+            selected_value = list2.options[list2.selectedIndex].value;
+            selected_value_2 = list4.options[list4.selectedIndex].value;
+        }
+        
+        else {                      // Movie to Movie
+            url = "api/shortestPathM2M";
+            if(!list.selectedIndex || list.options[list.selectedIndex].value == "Movie List"
+                || !list3.selectedIndex || list3.options[list3.selectedIndex].value == "Movie List") { 
+                    alert("Please Select a Type");
+                    return;
+            }
+            selected_value = list.options[list.selectedIndex].value;
+            selected_value_2 = list3.options[list3.selectedIndex].value;
+        }
+        
+        cy.elements().remove();
+
+        $.ajax({
+            type : 'POST',
+            contentType: 'application/json;charset=UTF-8',
+            url : url,
+            data: { 'from' : selected_value, 'to' : selected_value_2},
+            dataType: "JSON",
+            success : function(data) {
+                console.log("Shortest Path : ");
+                console.log(data.nodes);
+                
+                cy.add(data);
+                cy.layout({name: 'concentric', padding: 90, width: 100});
+                arrange_cy();
+            }
+        });
+    }
+
+    // Get all Movies in the database
+    function get_movies() {
+        $.ajax({
+            type : 'GET',
+            url : 'api/movies',
+            success : function(data) {
+                console.log("Movies : ");
+                console.log(data.nodes);
+
+                var list = document.getElementById('movie_list'), list2 = document.getElementById('movie_list_2');
+                var option = document.createElement("option"), option2 = document.createElement("option");
+                
+                option.text = "Movie List"; option2.text = "Movie List";
+                list.add(option); list2.add(option2);
+                for(var i = 0; i < data.nodes.length; ++i) {
+                    var option = document.createElement("option"), option2 = document.createElement("option");
+                    
+                    option.text = data.nodes[i].data.title; option2.text = data.nodes[i].data.title;
+                    list.add(option); list2.add(option2);
+                }
+            }
+        });
+    }
+
+    // Get all Actors and Directors in the database
+    function get_people() {
+        $.ajax({
+            type : 'GET',
+            url : 'api/people',
+            success : function(data) {
+                console.log("People : ");
+                console.log(data.nodes);
+                
+                var list = document.getElementById('people_list'), list2 = document.getElementById('people_list_2');
+                var option = document.createElement("option"), option2 = document.createElement("option");
+                
+                option.text = "People List"; option2.text = "People List";
+                list.add(option); list2.add(option2);
+                for(var i = 0; i < data.nodes.length; ++i) {
+                    var option = document.createElement("option"), option2 = document.createElement("option");
+                    
+                    option.text = data.nodes[i].data.name; option2.text = data.nodes[i].data.name;
+                    list.add(option); list2.add(option2);
+                }
+            }
+        });
+    }
+
+    function arrange_cy() {
+        window.cy = cy;
+        cy.elements().unselectify();
+
+        cy.on('tap', 'node', function (e) {
+            var node = e.cyTarget, elements = cy.elements();
+            elements.removeClass('faded');
+            for(var i = 0; i < elements.length; ++i) {
+                if(elements[i] == node) continue;
+                elements[i].addClass('faded');
+            }
+
+        });
+
+        cy.on('tap', function(e) {
+            if(e.cyTarget == cy) {
+                cy.elements().removeClass('faded');
+            }
+        });
+
+        cy.nodes().qtip({
+            content : function(){
+                if(this.data().type == "Movie")
+                    return "Type : " + this.data().type + "</br>Title : " + this.data().title + "</br>Released in: " + this.data().released + "</br>Tag Line : " + this.data().tagLine;
+                else return "Type : " + this.data().type + "</br>Name : " + this.data().name + "</br>Born in: " + this.data().born;
+            },
+            position: {
+                my: 'top center',
+                at: 'bottom center'
+            },
+            style: {
+                classes: 'qtip-bootstrap',
+                tip: {
+                    width: 16,
+                    height: 8
+                }
+            }
+        });
+    }
+
+    function get_relations() {
+        $.ajax({
+            type : 'GET',
+            url : 'api/relations',
+            success : function(data) {
+                console.log("Relations : ");
+                console.log(data);
+                
+                var list = document.getElementById('relations');
+                var option = document.createElement("option");
+                
+                option.text = "Relations";
+                list.add(option);
+                for(var i = 0; i < data.length; ++i) {
+                    var option = document.createElement("option");
+                    option.text = data[i];
+                    list.add(option);
+                }
+
+            }
+        });
+    }
+
+    function show_charts() {
+        console.log("SHOW CHARTS");
+        get_relations();
+
+        if(!types_created) {
+            types_created = true;
+            var list = document.getElementById('type');
+
+            var option = document.createElement("option");
+            option.text = "Select A Type";
+            list.add(option);
+            
+            var option = document.createElement("option");
+            option.text = "Movie";
+            list.add(option);
+
+            var option = document.createElement("option");
+            option.text = "People";
+            list.add(option);
+        }
+
+        $('#movie_list').css('display', 'none');
+        $('#movie_list_2').css('display', 'none');
+        $('#people_list').css('display', 'none');
+        $('#people_list_2').css('display', 'none');
+        $('#send_movie').css('display', 'none');
+        $('#send_shortest_path').css('display', 'none');
+        $('#show_lists').css('display', 'none');
+        $('#shortest_path_selection').css('display', 'none');
+
+        $('#relations').css('display', 'inline-block');
+        $('#send_degree_centrality').css('display', 'inline-block');
+        $('#type').css('display', 'inline-block');
+    }
+
+    function show_degree_centrality() {
+        var list = document.getElementById('type');
+        var list2 = document.getElementById('relations');
+
+         if(!list.selectedIndex || list.options[list.selectedIndex].value == "Select A Type"
+            || !list2.selectedIndex || list2.options[list2.selectedIndex].value == "Relations") { 
+                alert("Please Select a Relation and A Type");
+                return;
+        }
+        selected_value = list.options[list.selectedIndex].value;
+        selected_value_2 = list2.options[list2.selectedIndex].value;
+
+        $.ajax({
+            type : 'POST',
+            contentType: 'application/json;charset=UTF-8',
+            url : 'api/degreeCentrality',
+            data: { 'type' : selected_value, 'Relation' : selected_value_2},
+            dataType: "JSON",
+            success : function(data) {
+                console.log("Degree Centrality : ");
+                console.log(data.data);
+
+                if(chart_created) myChart.svg.selectAll('*').remove();
+                myChart = new dimple.chart(svg, data.data);
+                myChart.setBounds(200, 120, 850, 800);
+                
+                var x = myChart.addCategoryAxis("x", "score");
+                x.addOrderRule("Date");
+                myChart.addCategoryAxis("y", "title");
+                myChart.addSeries("title", dimple.plot.bar);
+                myChart.draw();
+                chart_created = true;
+            }
+        });
+    }
+
+</script>
+
+                     

@@ -1,0 +1,8 @@
+version: '2'
+services:
+    staj_proje-sonar:
+        container_name: staj_proje-sonar
+        image: sonarqube:5.5-alpine
+        ports:
+            - 9000:9000
+            - 9092:9092

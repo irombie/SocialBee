@@ -1,0 +1,12 @@
+version: '2'
+services:
+    staj_proje-postgresql:
+        container_name: staj_proje-postgresql
+        image: postgres:9.5.2
+        # volumes:
+        #     - ~/volumes/jhipster/staj_proje/postgresql/:/var/lib/postgresql/
+        environment:
+            - POSTGRES_USER=staj_proje
+            - POSTGRES_PASSWORD=
+        ports:
+            - 5432:5432

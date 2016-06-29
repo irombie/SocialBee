@@ -1,0 +1,16 @@
+version: '2'
+services:
+    staj_proje-app:
+        image: staj_proje
+        external_links:
+            - staj_proje-postgresql:postgresql
+        environment:
+            - SPRING_PROFILES_ACTIVE=prod
+            - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresql:5432/staj_proje
+            - JHIPSTER_SLEEP=10 # gives time for the database to boot before the application
+        ports:
+            - 8080:8080
+    staj_proje-postgresql:
+        extends:
+            file: postgresql.yml
+            service: staj_proje-postgresql
