@@ -36,5 +36,5 @@ Open STS and chose to import an existing Maven project. Choose "SocialNetwork" t
 
 Note: Do not forget to change the database path from "Operation.java" file from the project.
 
-And run the project as Spring Boot Application after the buil finishe.
+And run the project as Spring Boot Application after the build finishes.
 
