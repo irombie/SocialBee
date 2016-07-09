@@ -57,12 +57,16 @@
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
         </dependency>
-		<dependency>
-		    <groupId>org.neo4j</groupId>
-		    <artifactId>neo4j</artifactId>
-		    <version>3.0.3</version>
-		</dependency>
-		
+	<dependency>
+	    <groupId>org.neo4j</groupId>
+	    <artifactId>neo4j</artifactId>
+	    <version>3.0.3</version>
+	</dependency>
+	<dependency>
+	    <groupId>org.neo4j</groupId>
+	    <artifactId>neo4j-cypher-dsl</artifactId>
+	    <version>1.6</version>
+	</dependency>
 		
   </dependencies>
   
