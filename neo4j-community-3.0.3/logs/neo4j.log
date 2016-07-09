@@ -1,0 +1,92 @@
+nohup: ignoring input
+2016-06-29 06:42:47.208+0000 INFO  Starting...
+2016-06-29 06:42:47.622+0000 INFO  Bolt enabled on localhost:7687.
+2016-06-29 06:42:47.702+0000 ERROR Failed to start Neo4j: Starting Neo4j failed: Component 'org.neo4j.server.database.LifecycleManagingDatabase@2df56e8a' was successfully initialized, but failed to start. Please see attached cause exception. Starting Neo4j failed: Component 'org.neo4j.server.database.LifecycleManagingDatabase@2df56e8a' was successfully initialized, but failed to start. Please see attached cause exception.
+org.neo4j.server.ServerStartupException: Starting Neo4j failed: Component 'org.neo4j.server.database.LifecycleManagingDatabase@2df56e8a' was successfully initialized, but failed to start. Please see attached cause exception.
+	at org.neo4j.server.exception.ServerStartupErrors.translateToServerStartupError(ServerStartupErrors.java:68)
+	at org.neo4j.server.AbstractNeoServer.start(AbstractNeoServer.java:217)
+	at org.neo4j.server.ServerBootstrapper.start(ServerBootstrapper.java:87)
+	at org.neo4j.server.ServerBootstrapper.start(ServerBootstrapper.java:66)
+	at org.neo4j.server.CommunityEntryPoint.main(CommunityEntryPoint.java:28)
+Caused by: org.neo4j.kernel.lifecycle.LifecycleException: Component 'org.neo4j.server.database.LifecycleManagingDatabase@2df56e8a' was successfully initialized, but failed to start. Please see attached cause exception.
+	at org.neo4j.kernel.lifecycle.LifeSupport$LifecycleInstance.start(LifeSupport.java:444)
+	at org.neo4j.kernel.lifecycle.LifeSupport.start(LifeSupport.java:107)
+	at org.neo4j.server.AbstractNeoServer.start(AbstractNeoServer.java:189)
+	... 3 more
+Caused by: java.lang.RuntimeException: Error starting org.neo4j.kernel.impl.factory.CommunityFacadeFactory, /home/odayibas/Desktop/Staj/neo4j-community-3.0.3/data/databases/graph.db
+	at org.neo4j.kernel.impl.factory.GraphDatabaseFacadeFactory.newFacade(GraphDatabaseFacadeFactory.java:144)
+	at org.neo4j.kernel.impl.factory.CommunityFacadeFactory.newFacade(CommunityFacadeFactory.java:40)
+	at org.neo4j.kernel.impl.factory.GraphDatabaseFacadeFactory.newFacade(GraphDatabaseFacadeFactory.java:108)
+	at org.neo4j.server.CommunityNeoServer.lambda$static$31(CommunityNeoServer.java:55)
+	at org.neo4j.server.database.LifecycleManagingDatabase.start(LifecycleManagingDatabase.java:89)
+	at org.neo4j.kernel.lifecycle.LifeSupport$LifecycleInstance.start(LifeSupport.java:434)
+	... 5 more
+Caused by: org.neo4j.kernel.lifecycle.LifecycleException: Component 'org.neo4j.kernel.internal.StoreLockerLifecycleAdapter@fe07bab' was successfully initialized, but failed to start. Please see attached cause exception.
+	at org.neo4j.kernel.lifecycle.LifeSupport$LifecycleInstance.start(LifeSupport.java:444)
+	at org.neo4j.kernel.lifecycle.LifeSupport.start(LifeSupport.java:107)
+	at org.neo4j.kernel.impl.factory.GraphDatabaseFacadeFactory.newFacade(GraphDatabaseFacadeFactory.java:140)
+	... 10 more
+Caused by: org.neo4j.kernel.StoreLockException: Store and its lock file has been locked by another process: /home/odayibas/Desktop/Staj/neo4j-community-3.0.3/data/databases/graph.db/store_lock. Please ensure no other process is using this database, and that the directory is writable (required even for read-only access)
+	at org.neo4j.kernel.internal.StoreLocker.storeLockException(StoreLocker.java:90)
+	at org.neo4j.kernel.internal.StoreLocker.checkLock(StoreLocker.java:76)
+	at org.neo4j.kernel.internal.StoreLockerLifecycleAdapter.start(StoreLockerLifecycleAdapter.java:40)
+	at org.neo4j.kernel.lifecycle.LifeSupport$LifecycleInstance.start(LifeSupport.java:434)
+	... 12 more
+nohup: ignoring input
+2016-06-29 06:42:58.985+0000 INFO  Starting...
+2016-06-29 06:42:59.430+0000 INFO  Bolt enabled on localhost:7687.
+2016-06-29 06:42:59.507+0000 ERROR Failed to start Neo4j: Starting Neo4j failed: Component 'org.neo4j.server.database.LifecycleManagingDatabase@2df56e8a' was successfully initialized, but failed to start. Please see attached cause exception. Starting Neo4j failed: Component 'org.neo4j.server.database.LifecycleManagingDatabase@2df56e8a' was successfully initialized, but failed to start. Please see attached cause exception.
+org.neo4j.server.ServerStartupException: Starting Neo4j failed: Component 'org.neo4j.server.database.LifecycleManagingDatabase@2df56e8a' was successfully initialized, but failed to start. Please see attached cause exception.
+	at org.neo4j.server.exception.ServerStartupErrors.translateToServerStartupError(ServerStartupErrors.java:68)
+	at org.neo4j.server.AbstractNeoServer.start(AbstractNeoServer.java:217)
+	at org.neo4j.server.ServerBootstrapper.start(ServerBootstrapper.java:87)
+	at org.neo4j.server.ServerBootstrapper.start(ServerBootstrapper.java:66)
+	at org.neo4j.server.CommunityEntryPoint.main(CommunityEntryPoint.java:28)
+Caused by: org.neo4j.kernel.lifecycle.LifecycleException: Component 'org.neo4j.server.database.LifecycleManagingDatabase@2df56e8a' was successfully initialized, but failed to start. Please see attached cause exception.
+	at org.neo4j.kernel.lifecycle.LifeSupport$LifecycleInstance.start(LifeSupport.java:444)
+	at org.neo4j.kernel.lifecycle.LifeSupport.start(LifeSupport.java:107)
+	at org.neo4j.server.AbstractNeoServer.start(AbstractNeoServer.java:189)
+	... 3 more
+Caused by: java.lang.RuntimeException: Error starting org.neo4j.kernel.impl.factory.CommunityFacadeFactory, /home/odayibas/Desktop/Staj/neo4j-community-3.0.3/data/databases/graph.db
+	at org.neo4j.kernel.impl.factory.GraphDatabaseFacadeFactory.newFacade(GraphDatabaseFacadeFactory.java:144)
+	at org.neo4j.kernel.impl.factory.CommunityFacadeFactory.newFacade(CommunityFacadeFactory.java:40)
+	at org.neo4j.kernel.impl.factory.GraphDatabaseFacadeFactory.newFacade(GraphDatabaseFacadeFactory.java:108)
+	at org.neo4j.server.CommunityNeoServer.lambda$static$31(CommunityNeoServer.java:55)
+	at org.neo4j.server.database.LifecycleManagingDatabase.start(LifecycleManagingDatabase.java:89)
+	at org.neo4j.kernel.lifecycle.LifeSupport$LifecycleInstance.start(LifeSupport.java:434)
+	... 5 more
+Caused by: org.neo4j.kernel.lifecycle.LifecycleException: Component 'org.neo4j.kernel.internal.StoreLockerLifecycleAdapter@fe07bab' was successfully initialized, but failed to start. Please see attached cause exception.
+	at org.neo4j.kernel.lifecycle.LifeSupport$LifecycleInstance.start(LifeSupport.java:444)
+	at org.neo4j.kernel.lifecycle.LifeSupport.start(LifeSupport.java:107)
+	at org.neo4j.kernel.impl.factory.GraphDatabaseFacadeFactory.newFacade(GraphDatabaseFacadeFactory.java:140)
+	... 10 more
+Caused by: org.neo4j.kernel.StoreLockException: Store and its lock file has been locked by another process: /home/odayibas/Desktop/Staj/neo4j-community-3.0.3/data/databases/graph.db/store_lock. Please ensure no other process is using this database, and that the directory is writable (required even for read-only access)
+	at org.neo4j.kernel.internal.StoreLocker.storeLockException(StoreLocker.java:90)
+	at org.neo4j.kernel.internal.StoreLocker.checkLock(StoreLocker.java:76)
+	at org.neo4j.kernel.internal.StoreLockerLifecycleAdapter.start(StoreLockerLifecycleAdapter.java:40)
+	at org.neo4j.kernel.lifecycle.LifeSupport$LifecycleInstance.start(LifeSupport.java:434)
+	... 12 more
+nohup: ignoring input
+2016-06-29 07:43:55.489+0000 INFO  Starting...
+2016-06-29 07:43:55.914+0000 INFO  Bolt enabled on localhost:7687.
+2016-06-29 07:43:57.924+0000 INFO  Started.
+2016-06-29 07:43:58.729+0000 INFO  Remote interface available at http://localhost:7474/
+2016-06-29 08:10:51.754+0000 INFO  Neo4j Server shutdown initiated by request
+2016-06-29 08:10:51.764+0000 INFO  Stopping...
+2016-06-29 08:10:51.848+0000 INFO  Stopped.
+nohup: ignoring input
+2016-06-29 08:10:53.235+0000 INFO  Starting...
+2016-06-29 08:10:53.636+0000 INFO  Bolt enabled on localhost:7687.
+2016-06-29 08:10:56.409+0000 INFO  Started.
+2016-06-29 08:10:57.101+0000 INFO  Remote interface available at http://localhost:7474/
+2016-06-29 08:14:16.727+0000 INFO  Neo4j Server shutdown initiated by request
+2016-06-29 08:14:16.738+0000 INFO  Stopping...
+2016-06-29 08:14:16.844+0000 INFO  Stopped.
+nohup: ignoring input
+2016-06-29 08:14:18.206+0000 INFO  Starting...
+2016-06-29 08:14:18.618+0000 INFO  Bolt enabled on localhost:7687.
+2016-06-29 08:14:20.719+0000 INFO  Started.
+2016-06-29 08:14:21.544+0000 INFO  Remote interface available at http://localhost:7474/
+2016-06-29 08:17:18.470+0000 INFO  Neo4j Server shutdown initiated by request
+2016-06-29 08:17:18.493+0000 INFO  Stopping...
+2016-06-29 08:17:18.595+0000 INFO  Stopped.
