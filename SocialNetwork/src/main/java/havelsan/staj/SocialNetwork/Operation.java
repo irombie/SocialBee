@@ -34,8 +34,9 @@ public class Operation {
 		File db = new File(DBPATH);
 		service = graphDbFactory.newEmbeddedDatabase(db);
 	}
-	public static AnalyzeData centrality(String query){
+	public static AnalyzeData degreeAnalysis(String query){
 		Result result = service.execute(query);
+		
 		
 		AnalyzeData dt = new AnalyzeData();
 		ArrayList<AnalyzeNode> data = new ArrayList<AnalyzeNode>();
@@ -58,8 +59,10 @@ public class Operation {
 		dt.setData(data);
 		return dt;
 	}
-	public static GraphData shortestPath(String query,ArrayList<GraphNode> nodes,ArrayList<GraphEdge> edges) throws IOException{
+	public static GraphData shortestPath(String query) throws IOException{
 		Result result = service.execute(query);
+		ArrayList<GraphNode> nodes = new ArrayList<GraphNode>();
+    	ArrayList<GraphEdge> edges = new ArrayList<GraphEdge>();
 		ArrayList<String> types = new ArrayList<String>();
 		
 		while(result.hasNext()){
@@ -180,7 +183,8 @@ public class Operation {
 		}
 		return list;
 	}
-	public static GraphData pullMovies (String query,ArrayList<GraphNode> nodes){
+	public static GraphData pullMovies (String query){
+		ArrayList<GraphNode> nodes = new ArrayList<GraphNode>();
 		Result result = service.execute(query);
 		while(result.hasNext()){
 			Map<String,Object> map = result.next();
@@ -214,8 +218,9 @@ public class Operation {
 		data.setNodes(nodes);
 		return data;
 	}
-	public static GraphData pullPeople (String query,ArrayList<GraphNode> nodes){
+	public static GraphData pullPeople (String query){
 		Result result = service.execute(query);
+    	ArrayList<GraphNode> nodes = new ArrayList<GraphNode>();
 		while(result.hasNext()){
 			Map<String,Object> map = result.next();
 			Set<String> keys = map.keySet();
@@ -246,7 +251,9 @@ public class Operation {
 		data.setNodes(nodes);
 		return data;
 	}
-	public static GraphData movieNetwork(String query,ArrayList<GraphNode> nodes,ArrayList<GraphEdge> edges,String firstRelation,String secondRelation ,String nameOfMovie) throws IOException{
+	public static GraphData movieNetwork(String query,String firstRelation,String secondRelation ,String nameOfMovie) throws IOException{
+		ArrayList<GraphNode> nodes = new ArrayList<GraphNode>();
+    	ArrayList<GraphEdge> edges = new ArrayList<GraphEdge>();
 		Result result = service.execute(query);
 		HashSet<Integer> ids = new HashSet<Integer>();//Node id's set for duplication check
 		

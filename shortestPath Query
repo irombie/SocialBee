@@ -1,8 +1,0 @@
-Match  (m1:Movie {title:"V for Vendetta"}),(m2:Movie {title:"The Replacements"}),p = shortestPath((m1)-[*]-(m2))
-With p, extract(rel in rels(p) | type(rel)) as types
-return nodes(p), types;
-
-
-
-http://stackoverflow.com/questions/33802597/cypher-query-return-type-of-relationship-of-paths-with-variable-length
-
