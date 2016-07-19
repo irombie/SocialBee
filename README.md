@@ -27,7 +27,15 @@ And please disable Neo4j authentication from neo4j.conf file that is in conf fol
 2)You need to have a running Sprint Tool Suite(STS) application which can be downloaded from here:
 https://spring.io/tools/sts/all
 
-ELİF BURASI SENDE.....
+3) In the "jhipster" folder in this repository, you need to run the project as follows: "./mvnw". (A detailed explanation on what is needed to run the project can be found in the README.md file in the "jhipster" folder.) For JHipster to run you need to install Java, Git, Node.js, Bower, Yeoman and Gulp first.
+
+4) Go to localhost:8080. You can see the initial screen.
+
+5) To see the graph of a movie, click on the "Movie Analysis" button and select a movie.
+
+6) To find the shortest path between a movie and a person, a movie and a movie, a person and a person, click on the "Show Analysis Results" button and select the two inputs for the analysis.
+
+7) To see the result of the Degree Centrality analysis, click on the "Show Charts" buttons and select movie or person degree centrality.
 
 
 To Start The Server
